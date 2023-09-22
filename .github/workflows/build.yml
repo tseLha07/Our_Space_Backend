@@ -1,12 +1,14 @@
-on: [push]
-jobs:
-  sonarcloud:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
+  on: [push]
+  jobs:
+    sonarcloud:
+      runs-on: ubuntu-latest
+      steps:
+        - uses: actions/checkout@v4
+          with:
+            fetch-depth: 0
+        - name: SonarCloud Scan
+          uses: sonarsource/sonarcloud-github-action@master
+          with:
+            projectBaseDir: my-custom-directory
           env:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      - name: Execute Gradle build
-        run: chmod +x gradlew && ./gradlew sonar
-
